@@ -1,0 +1,153 @@
+name: Fetch RL Papers
+
+on:
+  schedule:
+    # Run daily at 09:00 UTC (6:00 PM KST)
+    - cron: '0 9 * * *'
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  fetch-papers:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write  # Required to commit changes
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for proper commits
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install arxiv pyyaml
+
+      - name: Fetch papers from arXiv
+        id: fetch
+        run: |
+          echo "Running paper fetch script..."
+          python scripts/fetch-papers.py --days 1 --output papers/auto-updates
+
+          # Check if there are any changes
+          if [[ -n $(git status --porcelain) ]]; then
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+
+            # Count new files
+            new_files=$(git status --porcelain | wc -l)
+            echo "new_files=$new_files" >> $GITHUB_OUTPUT
+
+            # Get today's date for the file
+            today=$(date +%Y-%m-%d)
+            echo "date=$today" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push changes
+        if: steps.fetch.outputs.has_changes == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add papers/auto-updates/
+          git commit -m "chore: auto-update arXiv papers (${{ steps.fetch.outputs.date }})"
+          git push
+
+      - name: Extract paper summary
+        if: steps.fetch.outputs.has_changes == 'true'
+        id: summary
+        run: |
+          # Read the generated file and extract summary
+          today=$(date +%Y-%m-%d)
+          file_path="papers/auto-updates/${today}.md"
+
+          if [ -f "$file_path" ]; then
+            # Count papers
+            paper_count=$(grep -c "^### " "$file_path" || echo "0")
+            echo "paper_count=$paper_count" >> $GITHUB_OUTPUT
+
+            # Extract first 5 paper titles and links
+            summary=$(awk '
+              /^### / {
+                if (++count <= 5) {
+                  title = substr($0, 5)
+                  getline
+                  while ($0 !~ /^\[arXiv:/) getline
+                  match($0, /\[arXiv:[^]]+\]\(([^)]+)\)/, arr)
+                  printf "• [%s](%s)\n", title, arr[1]
+                }
+              }
+              END {
+                if (count > 5) printf "\n...and %d more papers\n", count - 5
+              }
+            ' "$file_path")
+
+            # Escape for GitHub Actions
+            summary="${summary//'%'/'%25'}"
+            summary="${summary//$'\n'/'%0A'}"
+            summary="${summary//$'\r'/'%0D'}"
+            echo "summary=$summary" >> $GITHUB_OUTPUT
+          else
+            echo "paper_count=0" >> $GITHUB_OUTPUT
+            echo "summary=No papers file found" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Send Slack notification
+        if: steps.fetch.outputs.has_changes == 'true'
+        uses: slackapi/slack-github-action@v2.0.0
+        with:
+          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+          webhook-type: incoming-webhook
+          payload: |
+            {
+              "text": "📚 New RL Papers Update",
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "plain_text",
+                    "text": "📚 ${{ steps.summary.outputs.paper_count }} new RL papers found today"
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "${{ steps.summary.outputs.summary }}"
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "<${{ github.server_url }}/${{ github.repository }}/blob/main/papers/auto-updates/${{ steps.fetch.outputs.date }}.md|View all papers>"
+                  }
+                },
+                {
+                  "type": "context",
+                  "elements": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "Auto-fetched from arXiv • ${{ steps.fetch.outputs.date }}"
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: No new papers
+        if: steps.fetch.outputs.has_changes == 'false'
+        run: |
+          echo "No new papers found today"
+          echo "This is normal and means:"
+          echo "  - No papers matching our criteria were published in the last 24 hours"
+          echo "  - Or all papers were already captured in previous runs"
