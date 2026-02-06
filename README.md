@@ -28,28 +28,37 @@ Based on **Sutton & Barto, Reinforcement Learning: An Introduction (2nd Ed.)** c
 ## Progress
 
 <!-- AUTO-GENERATED:START -->
-![Progress](https://img.shields.io/badge/progress-0%25-red)
+![Overall Progress](https://img.shields.io/badge/Overall_Progress-0%25-lightgrey)
+![Tasks Completed](https://img.shields.io/badge/Tasks_Completed-0%2F60-blue)
 
-| Week | Topic | Status |
-|------|-------|--------|
-| 01 | Introduction to RL | ![](https://img.shields.io/badge/-not_started-lightgrey) |
-| 02 | Markov Decision Processes | ![](https://img.shields.io/badge/-not_started-lightgrey) |
-| 03 | Dynamic Programming | ![](https://img.shields.io/badge/-not_started-lightgrey) |
-| 04 | Monte Carlo Methods | ![](https://img.shields.io/badge/-not_started-lightgrey) |
-| 05 | Temporal-Difference Learning | ![](https://img.shields.io/badge/-not_started-lightgrey) |
-| 06 | n-step Methods & Eligibility Traces | ![](https://img.shields.io/badge/-not_started-lightgrey) |
-| 07 | Planning and Learning | ![](https://img.shields.io/badge/-not_started-lightgrey) |
-| 08 | Value Function Approximation | ![](https://img.shields.io/badge/-not_started-lightgrey) |
-| 09 | Deep Q-Networks | ![](https://img.shields.io/badge/-not_started-lightgrey) |
-| 10 | DQN Extensions | ![](https://img.shields.io/badge/-not_started-lightgrey) |
-| 11 | Policy Gradient Methods | ![](https://img.shields.io/badge/-not_started-lightgrey) |
-| 12 | Actor-Critic Methods | ![](https://img.shields.io/badge/-not_started-lightgrey) |
-| 13 | TRPO & PPO | ![](https://img.shields.io/badge/-not_started-lightgrey) |
-| 14 | Continuous Control | ![](https://img.shields.io/badge/-not_started-lightgrey) |
-| 15 | Model-Based RL | ![](https://img.shields.io/badge/-not_started-lightgrey) |
-| 16 | Exploration & Exploitation | ![](https://img.shields.io/badge/-not_started-lightgrey) |
-| 17 | Reward Modeling & RLHF | ![](https://img.shields.io/badge/-not_started-lightgrey) |
-| 18 | Beyond RLHF | ![](https://img.shields.io/badge/-not_started-lightgrey) |
+| Week | Topic | Progress | Status |
+|------|-------|----------|--------|
+| Week 01 | [Week 1: Introduction to Reinforcement Learning](01-introduction/) | 0/5 (0%) | ![not_started](https://img.shields.io/badge/not started-lightgrey) |
+| Week 02 | [Week 2: Markov Decision Processes](02-mdp/) | 0/5 (0%) | ![not_started](https://img.shields.io/badge/not started-lightgrey) |
+| Week 03 | [Week 3: Dynamic Programming](03-dynamic-programming/) | 0/5 (0%) | ![not_started](https://img.shields.io/badge/not started-lightgrey) |
+| Week 04 | [Week 4: Monte Carlo Methods](04-monte-carlo/) | 0/0 (0%) | ![not_started](https://img.shields.io/badge/not started-lightgrey) |
+| Week 05 | [Week 5: Temporal-Difference Learning](05-temporal-difference/) | 0/0 (0%) | ![not_started](https://img.shields.io/badge/not started-lightgrey) |
+| Week 06 | [Week 6: n-step Methods & Eligibility Traces](06-nstep-eligibility/) | 0/0 (0%) | ![not_started](https://img.shields.io/badge/not started-lightgrey) |
+| Week 07 | [Week 7: Planning and Learning](07-planning-and-learning/) | 0/0 (0%) | ![not_started](https://img.shields.io/badge/not started-lightgrey) |
+| Week 08 | [Week 8: Value Function Approximation](08-value-function-approx/) | 0/6 (0%) | ![not_started](https://img.shields.io/badge/not started-lightgrey) |
+| Week 09 | [Week 9: Deep Q-Networks (DQN)](09-dqn/) | 0/6 (0%) | ![not_started](https://img.shields.io/badge/not started-lightgrey) |
+| Week 10 | [Week 10: DQN Extensions](10-dqn-extensions/) | 0/5 (0%) | ![not_started](https://img.shields.io/badge/not started-lightgrey) |
+| Week 11 | [Week 11: Policy Gradient Methods](11-policy-gradient/) | 0/5 (0%) | ![not_started](https://img.shields.io/badge/not started-lightgrey) |
+| Week 12 | [Week 12: Actor-Critic Methods](12-actor-critic/) | 0/5 (0%) | ![not_started](https://img.shields.io/badge/not started-lightgrey) |
+| Week 13 | [Week 13: TRPO & PPO (Trust Region Policy Optimization & Proximal Policy Optimization)](13-trpo-ppo/) | 0/6 (0%) | ![not_started](https://img.shields.io/badge/not started-lightgrey) |
+| Week 14 | [Week 14: Continuous Control (DDPG, TD3, SAC)](14-continuous-control/) | 0/6 (0%) | ![not_started](https://img.shields.io/badge/not started-lightgrey) |
+| Week 15 | [Week 15: Model-Based Reinforcement Learning](15-model-based-rl/) | 0/0 (0%) | ![not_started](https://img.shields.io/badge/not started-lightgrey) |
+| Week 16 | [Week 16: Exploration and Exploitation](16-exploration/) | 0/0 (0%) | ![not_started](https://img.shields.io/badge/not started-lightgrey) |
+| Week 17 | [Week 17: Reward Modeling and RLHF](17-reward-modeling-rlhf/) | 0/0 (0%) | ![not_started](https://img.shields.io/badge/not started-lightgrey) |
+| Week 18 | [Week 18: Beyond RLHF - Direct Preference Optimization and Modern Alignment](18-beyond-rlhf/) | 0/6 (0%) | ![not_started](https://img.shields.io/badge/not started-lightgrey) |
+
+### Summary
+
+- **Completed Weeks:** 0/18
+- **In Progress:** 0
+- **Not Started:** 18
+- **Total Tasks:** 0/60
+- **Overall Completion:** 0.0%
 <!-- AUTO-GENERATED:END -->
 
 ## Primary References
